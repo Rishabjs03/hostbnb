@@ -3,8 +3,10 @@ import React, { useCallback, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
 import MenuItems from "./MenuItems";
+import UseRegisterModal from "@/app/hooks/UseRegisterModal";
 
 const UserMenu = () => {
+  const RegisterModal = UseRegisterModal();
   const [Open, setOpen] = useState(false);
   const ToggleOpen = useCallback(() => {
     setOpen((value) => !value);
@@ -17,7 +19,7 @@ const UserMenu = () => {
         </div>
         <div
           onClick={ToggleOpen}
-          className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition"
+          className="p-4 md:py-2 md:px-3 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition"
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
@@ -30,7 +32,7 @@ const UserMenu = () => {
           <div className="flex flex-col cursor-pointer">
             <>
               <MenuItems onClick={() => {}} label="Login" />
-              <MenuItems onClick={() => {}} label="Signup" />
+              <MenuItems onClick={RegisterModal.onOpen} label="Signup" />
             </>
           </div>
         </div>
