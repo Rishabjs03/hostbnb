@@ -1,15 +1,17 @@
 "use client";
 import UseRegisterModal from "@/app/hooks/UseRegisterModal";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
 import toast from "react-hot-toast";
+import UseLoginModal from "@/app/hooks/UseLoginModal";
 
 const RegisterModal = () => {
   const RegisterModal = UseRegisterModal();
+  const LoginModal = UseLoginModal();
   const [isLoading, setisLoading] = useState(false);
 
   const {
@@ -38,6 +40,10 @@ const RegisterModal = () => {
         setisLoading(false);
       });
   };
+  const toggle = useCallback(() => {
+    LoginModal.onOpen();
+    RegisterModal.onClose();
+  }, [LoginModal, RegisterModal]);
   const BodyContent = (
     <div className="flex flex-col gap-4 ">
       <Heading title="Welcome to Hostbnb" subtitle="Create an account" />
@@ -74,7 +80,7 @@ const RegisterModal = () => {
         <div className="justify-center flex flex-row items-center gap-2 ">
           <div>Already Have A Account?</div>
           <div
-            onClick={RegisterModal.onClose}
+            onClick={toggle}
             className="text-neutral-800 cursor-pointer hover:underline"
           >
             Log In

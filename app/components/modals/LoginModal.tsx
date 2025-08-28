@@ -1,7 +1,7 @@
 "use client";
 import UseLoginModal from "@/app/hooks/UseLoginModal";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Modal from "./Modal";
 import Heading from "../Heading";
@@ -44,6 +44,10 @@ const LoginModal = () => {
       }
     });
   };
+  const toggle = useCallback(() => {
+    LoginModal.onClose();
+    RegisterModal.onOpen();
+  }, [LoginModal, RegisterModal]);
   const BodyContent = (
     <div className="flex flex-col gap-4 ">
       <Heading title="Welcome Back!" subtitle="Login to your account!" />
@@ -71,12 +75,12 @@ const LoginModal = () => {
       <hr />
       <div className="text-neutral-500 text-center mt-4 font-light ">
         <div className="justify-center flex flex-row items-center gap-2 ">
-          <div>Already Have A Account?</div>
+          <div>First time using Hostbnb?</div>
           <div
-            onClick={RegisterModal.onClose}
+            onClick={toggle}
             className="text-neutral-800 cursor-pointer hover:underline"
           >
-            Log In
+            Create One
           </div>
         </div>
       </div>
