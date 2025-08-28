@@ -7,6 +7,8 @@ import ClientOnly from "./components/ClientOnly";
 
 import RegisterModal from "./components/modals/RegisterModal";
 import ToasterProviders from "./providers/ToasterProviders";
+import LoginModal from "./components/modals/LoginModal";
+import getCurrentUser from "./actions/getCurrentUser";
 
 const font = Nunito({
   variable: "--font-nunito",
@@ -18,18 +20,20 @@ export const metadata: Metadata = {
   description: "AirBnb clone",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const currentUser = await getCurrentUser();
   return (
     <html lang="en">
       <body className={` ${font.variable}`}>
         <ClientOnly>
           <ToasterProviders />
+          <LoginModal />
           <RegisterModal />
-          <Navbar />
+          <Navbar currentUser={currentUser} />
         </ClientOnly>
         {children}
       </body>
